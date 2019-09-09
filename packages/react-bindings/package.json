@@ -1,15 +1,15 @@
 {
   "name": "@stardust-ui/react-bindings",
   "description": "TODO",
-  "version": "0.30.0",
-  "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
+  "version": "0.38.0",
+  "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@stardust-ui/state": "^0.30.0",
+    "@stardust-ui/state": "^0.38.0",
     "react-is": "^16.6.3"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.37.0",
+    "@stardust-ui/internal-tooling": "^0.38.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
