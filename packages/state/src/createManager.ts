@@ -32,8 +32,11 @@ const createManager = <State, Actions extends AnyActions>(
     action: A,
     ...args: Parameters<A>
   ) => {
-    if (!action) return
-    if (debug) console.log('manager ACTION', action.name || 'Anonymous')
+    if (process.env.NODE_ENV !== 'production') {
+      if (debug) {
+        console.log('manager ACTION', action.name || 'Anonymous')
+      }
+    }
 
     const actionResult = action(...args)(getState(), manager.actions)
     if (actionResult) setState(actionResult)
@@ -43,12 +46,15 @@ const createManager = <State, Actions extends AnyActions>(
     const prevState = getState()
 
     middleware.forEach((middlewareItem, index) => {
-      if (debug) {
-        console.log(`manager MIDDLEWARE[${index}]`, {
-          prev: prevState,
-          next: getState(),
-        })
+      if (process.env.NODE_ENV !== 'production') {
+        if (debug) {
+          console.log(`manager MIDDLEWARE[${index}]`, {
+            prev: prevState,
+            next: getState(),
+          })
+        }
       }
+
       setState(middlewareItem(prevState, getState(), manager.actions))
     })
   }

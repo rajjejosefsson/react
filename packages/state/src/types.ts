@@ -5,7 +5,7 @@ export type Middleware<State, Actions> = (
   prevState: State,
   nextState: State,
   actions: Actions,
-) => State
+) => Partial<State>
 
 export type SideEffect<State, Actions> = (manager: Manager<State, Actions>) => void
 
