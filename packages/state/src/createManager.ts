@@ -63,7 +63,11 @@ const createManager = <State, Actions extends AnyActions>(
     if (!sideEffects) return
 
     sideEffects.forEach((sideEffect, index) => {
-      if (debug) console.log(`manager SIDE_EFFECT[${index}]`)
+      if (process.env.NODE_ENV !== 'production') {
+        if (debug) {
+          console.log(`manager SIDE_EFFECT[${index}]`)
+        }
+      }
       sideEffect(manager)
     })
   }
