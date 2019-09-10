@@ -60,7 +60,12 @@ export const getInitialAutoControlledState = <Props extends AnyProps, PropName e
   // so we can set initial values from defaults.
   return autoControlledProps.reduce(
     (acc, propName) => {
-      acc[propName] = getAutoControlledStateValue(propName, props)
+      const propValue = getAutoControlledStateValue(propName, props)
+
+      // We should override values from state manager if undefined
+      if (propValue !== undefined) {
+        acc[propName] = propValue
+      }
 
       return acc
     },

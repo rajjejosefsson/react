@@ -1,24 +1,32 @@
-import { Actions, Manager, ManagerFactory, Middleware } from '@stardust-ui/state'
+import {
+  AnyActions,
+  EnhancedActions,
+  Manager,
+  ManagerFactory,
+  Middleware,
+} from '@stardust-ui/state'
 import * as React from 'react'
 
 import { getDefinedAutoControlledProps, getInitialAutoControlledState } from './stateUtils'
-import { AnyProps } from './types'
 
 const useStateManager = <
-  State extends AnyProps,
-  ActionNames extends string,
+  State,
+  Actions extends AnyActions,
   Props extends Partial<State>,
   AProps extends keyof State
 >(
-  managerFactory: ManagerFactory<State, ActionNames>,
+  managerFactory: ManagerFactory<State, Actions>,
   props: Props,
   autoControlledProps: (keyof Props)[] = [],
-): Manager<State, ActionNames> => {
-  const latestManager = React.useRef<Manager<State, ActionNames> | null>(null)
+): Manager<State, Actions> => {
+  const latestManager = React.useRef<Manager<State, Actions> | null>(null)
 
   // Heads up! setState() is used only for triggering rerenders stateManager is SSOT()
   const [, setState] = React.useState()
-  const syncState = React.useCallback(({ state }) => setState(state), [])
+  const syncState = React.useCallback(
+    (manager: Manager<State, Actions>) => setState(manager.state),
+    [],
+  )
 
   const definedAutoControlledProps = getDefinedAutoControlledProps(autoControlledProps, props)
   // Is used as dependencies to recreate manager
@@ -27,7 +35,7 @@ const useStateManager = <
     [],
   )
 
-  const overrideAutoControlledProps: Middleware<State, ActionNames> = (
+  const overrideAutoControlledProps: Middleware<State, Actions> = (
     _prevState: State,
     nextState: State,
   ) => ({
@@ -42,7 +50,8 @@ const useStateManager = <
       : getInitialAutoControlledState(autoControlledProps, props)
 
     return managerFactory({
-      actions: {} as Actions<State, ActionNames>,
+      // Factory has already configured actions
+      actions: {} as EnhancedActions<State, Actions>,
       state: initialState,
       middleware: [overrideAutoControlledProps],
       sideEffects: [syncState],

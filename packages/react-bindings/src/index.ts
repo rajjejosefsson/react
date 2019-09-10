@@ -1,1 +1,1 @@
-export { default as useStateManager } from './useStateManager'
+export { default as useStateManager } from './hooks/useStateManager'
