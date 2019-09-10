@@ -1,45 +1,37 @@
-export type Action<State, ActionNames extends string> = (
-  ...args: any[]
-) => (state: State, actions: Actions<State, ActionNames>) => Partial<State> | void
+export type AnyAction = (...args: any[]) => void
+export type AnyActions = Record<string, AnyAction>
 
-export type Actions<State, ActionNames extends string> = Record<
-  ActionNames,
-  Action<State, ActionNames>
->
-
-export type Middleware<State, ActionNames extends string> = (
+export type Middleware<State, Actions> = (
   prevState: State,
   nextState: State,
-  actions: Actions<State, ActionNames>,
+  actions: Actions,
 ) => State
 
-export type SideEffect<State, ActionNames extends string> = (
-  manager: Manager<State, ActionNames>,
-) => void
+export type SideEffect<State, Actions> = (manager: Manager<State, Actions>) => void
 
-export type ManagerConfig<State, ActionNames extends string> = {
-  actions: Actions<State, ActionNames>
+export type EnhancedAction<
+  State,
+  Actions extends AnyActions,
+  Action extends AnyAction = AnyActions[keyof AnyActions]
+> = (...args: Parameters<Action>) => (state: State, actions: Actions) => Partial<State> | void
+
+export type EnhancedActions<State, Actions extends AnyActions> = {
+  [Name in keyof Actions]: EnhancedAction<State, Actions, Actions[Name]>
+}
+
+export type ManagerConfig<State, Actions extends AnyActions> = {
+  actions: EnhancedActions<State, Actions>
   debug?: boolean
-  middleware?: Middleware<State, ActionNames>[]
+  middleware?: Middleware<State, Actions>[]
   state?: Partial<State>
-  sideEffects?: SideEffect<State, ActionNames>[]
+  sideEffects?: SideEffect<State, Actions>[]
 }
 
-export type ManagerFactory<State, ActionNames extends string> = (
-  config: ManagerConfig<State, ActionNames>,
-) => Manager<State, ActionNames>
+export type ManagerFactory<State, Actions extends AnyActions> = (
+  config: ManagerConfig<State, Actions>,
+) => Manager<State, Actions>
 
-export type Manager<State, ActionNames extends string> = {
+export type Manager<State, Actions> = {
   readonly state: State
-  actions: ManagerActions<State, ActionNames>
+  actions: Actions
 }
-
-export type ManagerAction<State, ActionNames extends string> = (
-  state: State,
-  actions: Actions<State, ActionNames>,
-) => void
-
-export type ManagerActions<State, ActionNames extends string> = Record<
-  ActionNames,
-  ManagerAction<State, ActionNames>
->

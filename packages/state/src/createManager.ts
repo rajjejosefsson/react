@@ -1,37 +1,41 @@
-import { Action, ManagerActions, Manager, ManagerConfig, ManagerAction } from './types'
+import { AnyActions, EnhancedAction, Manager, ManagerConfig } from './types'
 
-const createManager = <State, ActionNames extends string>(
-  config: ManagerConfig<State, ActionNames>,
-): Manager<State, ActionNames> => {
+const createManager = <State, Actions extends AnyActions>(
+  config: ManagerConfig<State, Actions>,
+): Manager<State, Actions> => {
   const { actions, debug, middleware = [], sideEffects = [], state } = config
   const _state: State = Object.assign({}, state) as State
 
   const getState = (): State => Object.assign({}, _state)
   const setState = (partial: Partial<State>): State => Object.assign(_state, partial)
 
-  const manager: Manager<State, ActionNames> = {
-    actions: {} as ManagerActions<State, ActionNames>,
+  const manager: Manager<State, Actions> = {
+    actions: {} as Actions,
     get state() {
       return getState()
     },
   }
 
   // assign actions to manager's api
-  Object.keys(actions).forEach((actionName: ActionNames) => {
-    const enhancedAction: ManagerAction<State, ActionNames> = (...args: any[]) => {
-      applyAction(actions[actionName], ...args)
+  Object.keys(actions).forEach(actionName => {
+    const enhancedAction = actions[actionName]
+    const action = (...args: Parameters<typeof enhancedAction>) => {
+      applyAction(enhancedAction, ...args)
       applyMiddleware()
       applySideEffects()
     }
 
-    manager.actions[actionName] = enhancedAction
+    manager.actions[actionName] = action
   })
 
-  const applyAction = (action: Action<State, ActionNames>, ...args: any[]) => {
+  const applyAction = <A extends EnhancedAction<State, Actions>>(
+    action: A,
+    ...args: Parameters<A>
+  ) => {
     if (!action) return
     if (debug) console.log('manager ACTION', action.name || 'Anonymous')
 
-    const actionResult = action(...args)(getState(), actions)
+    const actionResult = action(...args)(getState(), manager.actions)
     if (actionResult) setState(actionResult)
   }
 
@@ -45,7 +49,7 @@ const createManager = <State, ActionNames extends string>(
           next: getState(),
         })
       }
-      setState(middlewareItem(prevState, getState(), actions))
+      setState(middlewareItem(prevState, getState(), manager.actions))
     })
   }
 
