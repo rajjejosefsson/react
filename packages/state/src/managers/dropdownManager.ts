@@ -51,7 +51,3 @@ export const createDropdownManager = <I>(
       ...config.actions,
     },
   })
-
-const m = createDropdownManager()
-m.actions.select({ a: true })
-m.actions.open()
