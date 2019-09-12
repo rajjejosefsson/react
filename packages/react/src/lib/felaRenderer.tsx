@@ -1,9 +1,9 @@
 import { createRenderer as createFelaRenderer } from 'fela'
 import felaPluginEmbedded from 'fela-plugin-embedded'
+import felaPluginExpandShorthand from 'fela-plugin-expand-shorthand'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
-import expandShorthand from 'fela-plugin-expand-shorthand'
 import felaPluginRtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
@@ -70,8 +70,7 @@ const rendererConfig = {
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
 
-    expandShorthand(true),
-    // felaExpandCssShorthandsPlugin(),
+    felaPluginExpandShorthand(true),
 
     felaPluginRtl(),
   ],
