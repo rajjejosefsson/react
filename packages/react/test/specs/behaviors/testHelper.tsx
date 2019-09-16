@@ -20,6 +20,7 @@ export interface TestDefinition {
 const skipSpecChecksForFiles = [
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
+  'genericItemBehavior.ts', // tests are written in genericItemBehavior-test.tsx
   'alertBehavior.ts', // tests are written in alertBehavior-test.tsx
   'sliderBehavior.ts', // tests are written in sliderBehavior-test.ts
 ]

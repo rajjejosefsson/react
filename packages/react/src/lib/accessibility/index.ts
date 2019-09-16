@@ -10,12 +10,17 @@ export { default as menuDividerBehavior } from './Behaviors/Menu/menuDividerBeha
 export { default as submenuBehavior } from './Behaviors/Menu/submenuBehavior'
 export { default as basicListBehavior } from './Behaviors/List/listBehavior'
 export { default as basicListItemBehavior } from './Behaviors/List/basicListItemBehavior'
+export {
+  default as basicGenericItemBehavior,
+} from './Behaviors/GenericItem/basicGenericItemBehavior'
+export { default as genericItemBehavior } from './Behaviors/GenericItem/genericItemBehavior'
 export { default as listBehavior } from './Behaviors/List/listBehavior'
 export { default as listItemBehavior } from './Behaviors/List/listItemBehavior'
 export { default as navigableListBehavior } from './Behaviors/List/navigableListBehavior'
 export { default as navigableListItemBehavior } from './Behaviors/List/navigableListItemBehavior'
 export { default as selectableListBehavior } from './Behaviors/List/selectableListBehavior'
 export { default as selectableListItemBehavior } from './Behaviors/List/selectableListItemBehavior'
+
 export { default as loaderBehavior } from './Behaviors/Loader/loaderBehavior'
 export { default as inputBehavior } from './Behaviors/Input/inputBehavior'
 export { default as iconBehavior } from './Behaviors/Icon/iconBehavior'

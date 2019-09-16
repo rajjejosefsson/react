@@ -1,4 +1,4 @@
-import { GenericItemVariables } from 'src/themes/teams/components/GenericItem/genericItemVariables'
+import { GenericItemVariables } from '../../../teams/components/GenericItem/genericItemVariables'
 
 export default (siteVars: any): Partial<GenericItemVariables> => ({
   selectedFocusOutlineColor: siteVars.colors.brand[600],

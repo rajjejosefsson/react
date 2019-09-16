@@ -11,7 +11,7 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import Flex from '../Flex/Flex'
-import { listItemBehavior } from '../../lib/accessibility'
+import { genericItemBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
@@ -38,18 +38,18 @@ export interface GenericItemProps
   endMedia?: ShorthandValue<BoxProps>
   headerMedia?: ShorthandValue<BoxProps>
 
-  /** A list item can appear more important and draw the user's attention. */
+  /** A generic item can appear more important and draw the user's attention. */
   important?: boolean
   media?: ShorthandValue<BoxProps>
 
   index?: number
-  /** A list item can indicate that it can be selected. */
+  /** A generic item can indicate that it can be selected. */
   selectable?: boolean
 
-  /** A list item can indicate that it can be navigable. */
+  /** A generic item can indicate that it can be navigable. */
   navigable?: boolean
 
-  /** Indicates if the current list item is selected. */
+  /** Indicates if the current generic item is selected. */
   selected?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
@@ -67,7 +67,7 @@ class GenericItem extends UIComponent<WithAsProp<GenericItemProps>> {
 
   static displayName = 'GenericItem'
 
-  static className = 'ui-generic-item'
+  static className = 'ui-genericitem'
 
   static slotClassNames: GenericItemSlotClassNames
 
@@ -100,7 +100,7 @@ class GenericItem extends UIComponent<WithAsProp<GenericItemProps>> {
 
   static defaultProps = {
     as: 'div',
-    accessibility: listItemBehavior as Accessibility,
+    accessibility: genericItemBehavior as Accessibility,
   }
 
   actionHandlers = {

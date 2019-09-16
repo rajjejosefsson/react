@@ -8,6 +8,7 @@ import {
   attachmentBehavior,
   basicListBehavior,
   basicListItemBehavior,
+  basicGenericItemBehavior,
   buttonBehavior,
   checkboxBehavior,
   embedBehavior,
@@ -70,6 +71,7 @@ testHelper.addTests(definitions)
 testHelper.addBehavior('attachmentBehavior', attachmentBehavior)
 testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
+testHelper.addBehavior('basicGenericItemBehavior', basicGenericItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
 testHelper.addBehavior('checkboxBehavior', checkboxBehavior)
 testHelper.addBehavior('embedBehavior', embedBehavior)

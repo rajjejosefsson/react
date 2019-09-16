@@ -1,30 +1,17 @@
 import * as React from 'react'
-import * as keyboardKey from 'keyboard-key'
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
 
 import GenericItem from 'src/components/GenericItem/GenericItem'
-import { selectableListItemBehavior } from 'src/lib/accessibility'
 
 describe('GenericItem', () => {
   isConformant(GenericItem)
-  handlesAccessibility(GenericItem, { defaultRootRole: 'listitem' })
+  handlesAccessibility(GenericItem, { defaultRootRole: 'none' })
 
-  test('handleClick is executed when Enter is pressed for selectable list', () => {
+  test('handleClick is executed when mouse click is clicked for generic item', () => {
     const onClick = jest.fn()
-    const genericItem = mountWithProvider(
-      <GenericItem accessibility={selectableListItemBehavior} onClick={onClick} />,
-    ).find('GenericItem')
-    genericItem.simulate('keydown', { keyCode: keyboardKey.Enter })
-    expect(onClick).toHaveBeenCalledTimes(1)
-  })
-
-  test('handleClick is executed when Spacebar is pressed for selectable list', () => {
-    const onClick = jest.fn()
-    const genericItem = mountWithProvider(
-      <GenericItem accessibility={selectableListItemBehavior} onClick={onClick} />,
-    ).find('ListItem')
-    genericItem.simulate('keydown', { keyCode: keyboardKey.Spacebar })
+    const genericItem = mountWithProvider(<GenericItem onClick={onClick} />).find('GenericItem')
+    genericItem.simulate('click')
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 })
