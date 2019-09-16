@@ -117,6 +117,9 @@ export { default as List } from './components/List/List'
 export * from './components/List/ListItem'
 export { default as ListItem } from './components/List/ListItem'
 
+export * from './components/GenericItem/GenericItem'
+export { default as GenericItem } from './components/GenericItem/GenericItem'
+
 export * from './components/Menu/Menu'
 export { default as Menu } from './components/Menu/Menu'
 export * from './components/Menu/MenuItem'
