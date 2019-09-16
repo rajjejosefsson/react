@@ -12,9 +12,9 @@ const truncateStyle: ICSSInJSStyle = {
   whiteSpace: 'nowrap',
 }
 
-const selectableHoverStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
-  background: v.selectableFocusHoverBackgroundColor,
-  color: v.selectableFocusHoverColor,
+const hoverStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
+  background: v.focusHoverBackgroundColor,
+  color: v.focusHoverColor,
   cursor: 'pointer',
 
   [`& .${GenericItem.slotClassNames.header}`]: { color: 'inherit' },
@@ -31,12 +31,12 @@ const selectableHoverStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
   [`& .${GenericItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
-const selectableFocusStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
-  ...selectableHoverStyle(p, v),
+const focusStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
+  ...hoverStyle(p, v),
   outline: 0,
 
   ':focus-visible': {
-    outline: `.2rem solid ${v.selectedFocusOutlineColor}`,
+    outline: `.2rem solid ${v.focusOutlineColor}`,
     zIndex: 1,
   },
 })
@@ -50,14 +50,14 @@ const genericItemStyles: ComponentSlotStylesPrepared<GenericItemProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     minHeight: v.minHeight,
     padding: v.rootPadding,
-    ...((p.selectable || p.navigable) && {
+
+    // hide the end media by default until hovering
+    [`& .${GenericItem.slotClassNames.endMedia}`]: { display: 'none' },
+
+    '&:hover': hoverStyle(p, v),
+    '&:focus': focusStyle(p, v),
+    ...(p.selectable && {
       position: 'relative',
-
-      // hide the end media by default
-      [`& .${GenericItem.slotClassNames.endMedia}`]: { display: 'none' },
-
-      '&:hover': selectableHoverStyle(p, v),
-      '&:focus': selectableFocusStyle(p, v),
       ...(p.selected && selectedStyle(v)),
     }),
     ...(p.important && {

@@ -43,14 +43,15 @@ export interface GenericItemProps
   media?: ShorthandValue<BoxProps>
 
   index?: number
+
   /** A generic item can indicate that it can be selected. */
   selectable?: boolean
+  /** Indicates if the current generic item is selected. */
+  selected?: boolean
 
   /** A generic item can indicate that it can be navigable. */
   navigable?: boolean
 
-  /** Indicates if the current generic item is selected. */
-  selected?: boolean
   truncateContent?: boolean
   truncateHeader?: boolean
   /**
@@ -213,6 +214,6 @@ GenericItem.slotClassNames = {
 }
 
 /**
- * A GenericItem contains a single piece of content
+ * A GenericItem renders an item at is core
  */
 export default withSafeTypeForAs<typeof GenericItem, GenericItemProps, 'div'>(GenericItem)

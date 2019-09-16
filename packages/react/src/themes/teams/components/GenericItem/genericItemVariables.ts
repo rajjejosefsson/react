@@ -20,6 +20,11 @@ export interface GenericItemVariables {
   contentMediaFontSize: string
   contentMediaLineHeight: string
 
+  // Hover, Focus and outline
+  focusHoverColor: string
+  focusHoverBackgroundColor: string
+  focusOutlineColor: string
+
   // Selectable
   selectableFocusHoverColor: string
   selectableFocusHoverBackgroundColor: string
@@ -50,6 +55,11 @@ export default (siteVariables: any): GenericItemVariables => {
     // Content Media
     contentMediaFontSize: siteVariables.fontSizes.small,
     contentMediaLineHeight: siteVariables.lineHeightSmall,
+
+    // Focus, Hover, Outline
+    focusHoverColor: siteVariables.colors.white,
+    focusHoverBackgroundColor: siteVariables.colors.brand[500],
+    focusOutlineColor: siteVariables.colors.brand[600],
 
     // Selectable
     selectableFocusHoverColor: siteVariables.colors.white,

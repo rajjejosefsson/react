@@ -18,7 +18,7 @@ const GenericItemVariationsExample = () => {
     initialValue: 'Program the sensor to the SAS alarm through the haptic SQL card!',
   })
   const [headerMedia] = useStringKnob({ name: 'headerMedia', initialValue: '7:26 AM' })
-  const [endMedia] = useStringKnob({ name: 'endMedia', initialValue: '' })
+  const [endMedia] = useStringKnob({ name: 'endMedia', initialValue: '•••' })
   const [contentMedia] = useStringKnob({ name: 'contentMedia', initialValue: '' })
 
   return (

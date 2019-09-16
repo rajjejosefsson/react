@@ -23,6 +23,7 @@ const unsupportedComponents = [
   'ItemLayout',
   'Layout',
   'List',
+  'GenericItem',
   'MenuButton',
   'Portal',
   'Provider',
