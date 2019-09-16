@@ -67,7 +67,7 @@ class GenericItem extends UIComponent<WithAsProp<GenericItemProps>> {
 
   static displayName = 'GenericItem'
 
-  static className = 'ui-list__item'
+  static className = 'ui-generic-item'
 
   static slotClassNames: GenericItemSlotClassNames
 
@@ -99,7 +99,7 @@ class GenericItem extends UIComponent<WithAsProp<GenericItemProps>> {
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'div',
     accessibility: listItemBehavior as Accessibility,
   }
 

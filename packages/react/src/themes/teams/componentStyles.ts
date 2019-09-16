@@ -34,6 +34,8 @@ export { default as FormField } from './components/Form/formFieldStyles'
 export { default as Flex } from './components/Flex/flexStyles'
 export { default as FlexItem } from './components/Flex/flexItemStyles'
 
+export { default as GenericItem } from './components/GenericItem/genericItemStyles'
+
 export { default as Grid } from './components/Grid/gridStyles'
 
 export { default as Header } from './components/Header/headerStyles'

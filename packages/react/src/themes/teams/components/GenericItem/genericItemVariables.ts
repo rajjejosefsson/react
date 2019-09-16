@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../lib'
 
-export interface ListItemVariables {
+export interface GenericItemVariables {
   minHeight: string
   rootPadding: string
 
@@ -28,7 +28,7 @@ export interface ListItemVariables {
   selectedFocusOutlineColor: string
 }
 
-export default (siteVariables: any): ListItemVariables => {
+export default (siteVariables: any): GenericItemVariables => {
   return {
     minHeight: pxToRem(48),
     rootPadding: `0 ${pxToRem(18)} 0 ${pxToRem(20)}`,

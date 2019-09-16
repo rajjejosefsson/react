@@ -1,7 +1,10 @@
 import { pxToRem } from '../../../../lib'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
-import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
+import {
+  default as GenericItem,
+  GenericItemProps,
+} from '../../../../components/GenericItem/GenericItem'
 
 const truncateStyle: ICSSInJSStyle = {
   overflow: 'hidden',
@@ -9,26 +12,26 @@ const truncateStyle: ICSSInJSStyle = {
   whiteSpace: 'nowrap',
 }
 
-const selectableHoverStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
+const selectableHoverStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
 
-  [`& .${ListItem.slotClassNames.header}`]: { color: 'inherit' },
-  [`& .${ListItem.slotClassNames.content}`]: { color: 'inherit' },
+  [`& .${GenericItem.slotClassNames.header}`]: { color: 'inherit' },
+  [`& .${GenericItem.slotClassNames.content}`]: { color: 'inherit' },
 
   // hide the header media and content media on hover
-  [`& .${ListItem.slotClassNames.headerMedia}`]: {
+  [`& .${GenericItem.slotClassNames.headerMedia}`]: {
     ...screenReaderContainerStyles,
     color: 'inherit',
   },
-  [`& .${ListItem.slotClassNames.contentMedia}`]: { display: 'none', color: 'inherit' },
+  [`& .${GenericItem.slotClassNames.contentMedia}`]: { display: 'none', color: 'inherit' },
 
   // show the end media on hover
-  [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
+  [`& .${GenericItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
-const selectableFocusStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
+const selectableFocusStyle = (p: GenericItemProps, v): ICSSInJSStyle => ({
   ...selectableHoverStyle(p, v),
   outline: 0,
 
@@ -43,7 +46,7 @@ const selectedStyle = variables => ({
   color: variables.selectedColor,
 })
 
-const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
+const genericItemStyles: ComponentSlotStylesPrepared<GenericItemProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     minHeight: v.minHeight,
     padding: v.rootPadding,
@@ -51,7 +54,7 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
       position: 'relative',
 
       // hide the end media by default
-      [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'none' },
+      [`& .${GenericItem.slotClassNames.endMedia}`]: { display: 'none' },
 
       '&:hover': selectableHoverStyle(p, v),
       '&:focus': selectableFocusStyle(p, v),
@@ -110,4 +113,4 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
   }),
 }
 
-export default listItemStyles
+export default genericItemStyles
