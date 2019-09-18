@@ -18,7 +18,7 @@ const useStateManager = <
   managerFactory: ManagerFactory<State, Actions>,
   props: Props,
   autoControlledProps: (keyof Props)[] = [],
-): Manager<State, Actions> => {
+): [Readonly<State>, Readonly<Actions>] => {
   const latestManager = React.useRef<Manager<State, Actions> | null>(null)
 
   // Heads up! setState() is used only for triggering rerenders stateManager is SSOT()
@@ -60,7 +60,12 @@ const useStateManager = <
 
   latestManager.current = manager
 
-  return manager
+  if (process.env.NODE_ENV === 'production') {
+    return [manager.state, manager.actions]
+  }
+
+  // Object.freeze() is used only in dev-mode to avoid usage mistakes
+  return [Object.freeze(manager.state), Object.freeze(manager.actions)]
 }
 
 export default useStateManager

@@ -7,7 +7,7 @@ import * as ReactTestUtils from 'react-dom/test-utils'
 type TestState = { open: boolean; value: string }
 type TestActions = { change: (value: string) => void; toggle: () => void }
 
-const testStateManager: ManagerFactory<TestState, TestActions> = config =>
+const createTestManager: ManagerFactory<TestState, TestActions> = config =>
   createManager<TestState, TestActions>({
     ...config,
     actions: {
@@ -22,55 +22,65 @@ const testStateManager: ManagerFactory<TestState, TestActions> = config =>
   })
 
 type TestComponentProps = Partial<TestState> & {
-  defaultOpen?: boolean
   color?: string
+
+  defaultOpen?: boolean
+  open?: boolean
+
+  defaultValue?: string
+  value?: string
 }
 
 const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
-  const manager = useStateManager(testStateManager, props, ['open', 'value'])
+  const [state, actions] = useStateManager(createTestManager, props, ['open', 'value'])
 
   return (
     <>
-      <div className={`open-${manager.state.open}`} />
+      <div className={`open-${state.open}`} />
 
-      <input onChange={e => manager.actions.change(e.target.value)} value={manager.state.value} />
-      <button className={props.color} onClick={() => manager.actions.toggle()} />
+      <input onChange={e => actions.change(e.target.value)} value={state.value} />
+      <button className={props.color} onClick={() => actions.toggle()} />
     </>
   )
 }
 
 describe('useStateManager', () => {
-  it('foo', () => {
+  it('uses default values from state manager', () => {
     const wrapper = shallow(<TestComponent />)
 
     expect(wrapper.find('div').prop('className')).toBe('open-false')
     expect(wrapper.find('input').prop('value')).toBe('')
   })
 
-  it('foo', () => {
-    const wrapper = shallow(<TestComponent defaultOpen />)
+  it('sets default values of controlled props to the state', () => {
+    const wrapper = shallow(<TestComponent defaultOpen defaultValue="foo" />)
+
     expect(wrapper.find('div').prop('className')).toBe('open-true')
+    expect(wrapper.find('input').prop('value')).toBe('foo')
   })
 
-  it('foo2', () => {
+  it('sets values of controlled props to the state', () => {
+    const wrapper = shallow(<TestComponent open value="foo" />)
+
+    expect(wrapper.find('div').prop('className')).toBe('open-true')
+    expect(wrapper.find('input').prop('value')).toBe('foo')
+  })
+
+  it('handles state updates via actions', () => {
     const wrapper = shallow(<TestComponent />)
 
     ReactTestUtils.act(() => {
       wrapper.find('button').simulate('click')
     })
-    expect(wrapper.find('div').prop('className')).toBe('open-true')
-  })
-
-  it('foo2a', () => {
-    const wrapper = shallow(<TestComponent />)
-
     ReactTestUtils.act(() => {
       wrapper.find('input').simulate('change', { target: { value: 'foo' } })
     })
+
+    expect(wrapper.find('div').prop('className')).toBe('open-true')
     expect(wrapper.find('input').prop('value')).toBe('foo')
   })
 
-  it('foo3', () => {
+  it('update of non controlled props will not affect the state', () => {
     const wrapper = shallow(<TestComponent />)
 
     ReactTestUtils.act(() => {
@@ -79,7 +89,7 @@ describe('useStateManager', () => {
     expect(wrapper.find('div').prop('className')).toBe('open-false')
   })
 
-  it('foo4', () => {
+  it('sets values of controlled props to the state on updates', () => {
     const wrapper = shallow(<TestComponent />)
 
     ReactTestUtils.act(() => {
@@ -93,7 +103,7 @@ describe('useStateManager', () => {
     expect(wrapper.find('div').prop('className')).toBe('open-true')
   })
 
-  it('foo5', () => {
+  it('keeps last value of controlled prop in the state if value gets "undefined"', () => {
     const wrapper = shallow(<TestComponent />)
 
     ReactTestUtils.act(() => {
