@@ -49,11 +49,9 @@ export interface GenericItemProps
   /** Indicates if the current generic item is selected. */
   selected?: boolean
 
-  /** A generic item can indicate that it can be navigable. */
-  navigable?: boolean
-
   truncateContent?: boolean
   truncateHeader?: boolean
+
   /**
    * Called on click.
    *
@@ -89,7 +87,6 @@ class GenericItem extends UIComponent<WithAsProp<GenericItemProps>> {
     media: PropTypes.any,
 
     selectable: PropTypes.bool,
-    navigable: PropTypes.bool,
     index: PropTypes.number,
     selected: PropTypes.bool,
 
